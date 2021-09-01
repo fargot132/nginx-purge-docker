@@ -1,19 +1,17 @@
-FROM nginx:1.11
+FROM nginx:1.21
+USER root
 
-MAINTAINER David Galoyan <davojan@gmail.com>
+ENV NGX_CACHE_PURGE_VERSION=2.4.3
 
-ENV NGX_CACHE_PURGE_VERSION=2.4.1
-
-# Install basic packages and build tools
 RUN apt-get update && \
     apt-get install --no-install-recommends --no-install-suggests -y \
-      wget \
-      build-essential \
-      libssl-dev \
-      libpcre3 \
-      libpcre3-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        vim \
+        wget \
+        build-essential \
+        libssl-dev \
+        libpcre3 \
+        libpcre3-dev \
+        zlib1g-dev
 
 # download and extract sources
 RUN NGINX_VERSION=`nginx -V 2>&1 | grep "nginx version" | awk -F/ '{ print $2}'` && \
